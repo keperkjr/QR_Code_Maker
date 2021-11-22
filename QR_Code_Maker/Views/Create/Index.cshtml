@@ -20,16 +20,18 @@
             </div>
         </form>
     </div>
-</div>
 
-@if (Model != null && Model.source != null)
-{
-<div>
-    <h4>QRCode</h4>
-    <hr />
-    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { source = Model.source })
+    @if (Model != null && Model.source != null)
+    {
+        <div>
+            <h4>Preview</h4>
+            <hr />
+            <div>
+                @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { source = Model.source })
+            </div>
+        </div>
+    }
 </div>
-}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
