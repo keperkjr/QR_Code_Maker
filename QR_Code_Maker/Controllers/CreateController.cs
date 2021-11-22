@@ -32,8 +32,6 @@ namespace QR_Code_Maker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(QR_Code_Maker.Models.QRCode qrCode)
         {
-            qrCode.bytes = Utils.Methods.CreateQRCode(qrCode.source);
-
             return View(nameof(Index), qrCode);
         }
 

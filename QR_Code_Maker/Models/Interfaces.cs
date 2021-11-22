@@ -8,7 +8,6 @@ namespace QR_Code_Maker.Models
 {
     public class QRCode
     {
-        public byte[] bytes { get; set; }
         [Required(ErrorMessage = "Please enter a url or text")]
         public string source { get; set; }
     }

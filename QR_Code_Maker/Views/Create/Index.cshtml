@@ -22,9 +22,13 @@
     </div>
 </div>
 
-@if (Model != null && Model.bytes != null)
+@if (Model != null && Model.source != null)
 {
-    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { qrCode = Model })
+<div>
+    <h4>QRCode</h4>
+    <hr />
+    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { source = Model.source })
+</div>
 }
 
 @section Scripts {
