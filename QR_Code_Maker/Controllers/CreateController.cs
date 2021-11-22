@@ -15,6 +15,21 @@ namespace QR_Code_Maker.Controllers
             return View();
         }
 
+        // POST: CreateController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(QR_Code_Maker.Models.QRCode qrCode)
+        {
+            return View(nameof(Index), qrCode);
+        }
+
+        // GET: CreateController/Download/abc
+        public ActionResult Download(string text, int size)
+        {
+            var bytes = Utils.Methods.CreateQRCode(text, size, size);
+            return File(bytes, System.Net.Mime.MediaTypeNames.Image.Jpeg, $"QRCode_{size}x{size}");
+        }
+
         // GET: CreateController/Details/5
         public ActionResult Details(int id)
         {
@@ -25,14 +40,6 @@ namespace QR_Code_Maker.Controllers
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: CreateController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(QR_Code_Maker.Models.QRCode qrCode)
-        {
-            return View(nameof(Index), qrCode);
         }
 
         // POST: CreateController/Create
