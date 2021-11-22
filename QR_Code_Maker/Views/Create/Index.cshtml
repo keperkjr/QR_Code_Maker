@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <div style="width: 60%; margin: auto;">
-        <form asp-action="create">
+        <form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row" style="justify-content: center;">
                 <label for="source" class="col-form-label">Enter your website url or text here</label>
@@ -24,7 +24,7 @@
 
 @if (Model != null && Model.bytes != null)
 {
-    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { qrCode = Model.bytes })
+    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { qrCode = Model })
 }
 
 @section Scripts {
