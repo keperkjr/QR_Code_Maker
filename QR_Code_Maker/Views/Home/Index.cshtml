@@ -3,6 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div style="width: 60%; margin: auto;">
+        @*<input type="button" class="btn btn-primary btn-lg btn-block"
+               value="Create" onclick="location.href='@Url.Action("YourAction", "YourController")'" />
+        <input type="button" class="btn btn-secondary btn-lg btn-block"
+               value="Read" onclick="location.href='@Url.Action("YourAction", "YourController")'" />*@
+
+        <a class="btn btn-primary btn-lg btn-block" href="@Url.Action("YourAction","YourController")">Create</a>
+        <a class="btn btn-secondary btn-lg btn-block" href="@Url.Action("YourAction","YourController")">Read</a>
+    </div>
 </div>
