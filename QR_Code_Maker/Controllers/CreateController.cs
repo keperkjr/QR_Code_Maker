@@ -30,16 +30,11 @@ namespace QR_Code_Maker.Controllers
         // POST: CreateController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(QR_Code_Maker.Models.QRCode qrCode)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            qrCode.bytes = Utils.Methods.CreateQRCode(qrCode.source);
+
+            return View(nameof(Index), qrCode);
         }
 
         // GET: CreateController/Edit/5

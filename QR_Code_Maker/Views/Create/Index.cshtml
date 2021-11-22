@@ -1,7 +1,32 @@
-﻿
+﻿@model QR_Code_Maker.Models.QRCode
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="text-center">
+    <div style="width: 60%; margin: auto;">
+        <form asp-action="create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row" style="justify-content: center;">
+                <label for="source" class="col-form-label">Enter your website url or text here</label>
+                <div class="col-sm-10" style="padding-left: 0">
+                    <input asp-for="source" type="text" class="form-control" placeholder="http://" autocomplete="off">
+                    <span asp-validation-for="source" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Create QR Code</button>
+            </div>
+        </form>
+    </div>
+</div>
 
+@if (Model != null && Model.bytes != null)
+{
+    @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { qrCode = Model.bytes })
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
