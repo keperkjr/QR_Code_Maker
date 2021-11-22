@@ -7,14 +7,24 @@
 <div class="text-center">
     <div style="width: 60%; margin: auto;">
         <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row" style="justify-content: center;">
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+
+            <div class="form-group row" style="justify-content: center; margin-bottom: 0;">
                 <label for="source" class="col-form-label">Enter your website url or text here</label>
                 <div class="col-sm-10" style="padding-left: 0">
                     <input asp-for="source" type="text" class="form-control" placeholder="http://" autocomplete="off">
                     <span asp-validation-for="source" class="text-danger"></span>
                 </div>
             </div>
+
+            <div class="form-group" style="justify-content: center;">
+                <label for="size" class="col-form-label">Size</label>
+                <div>
+                    <input asp-for="size" type="range" min="50" max="1000" value="@(Model != null ? $"{Model.size}" : "200")" step="25">
+                    <div id="sliderOutput"></div>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Create QR Code</button>
             </div>
@@ -24,14 +34,30 @@
     @if (Model != null && Model.source != null)
     {
         <div>
-            <h4>Preview</h4>
+            <h4>Result</h4>
             <hr />
             <div>
-                @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { source = Model.source })
+                @await Component.InvokeAsync(nameof(QR_Code_Maker.ViewComponents.QRCodeViewer), new { source = Model.source, size = Model.size })
             </div>
         </div>
     }
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        let slider = document.querySelector("#size");
+        let sliderOutput = document.querySelector("#sliderOutput");
+        slider.addEventListener("input", (e) => {
+            updateSliderSize(slider, sliderOutput);
+        });
+        updateSliderSize(slider, sliderOutput);
+    });
+
+    function updateSliderSize(slider, sliderOutput) {
+        sliderOutput.innerHTML = `${slider.value} x ${slider.value} Px`;
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

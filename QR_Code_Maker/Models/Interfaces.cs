@@ -10,5 +10,6 @@ namespace QR_Code_Maker.Models
     {
         [Required(ErrorMessage = "Please enter a url or text")]
         public string source { get; set; }
+        public int size { get; set; }
     }
 }

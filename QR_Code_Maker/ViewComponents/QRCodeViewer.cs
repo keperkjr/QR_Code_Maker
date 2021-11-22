@@ -9,9 +9,9 @@ namespace QR_Code_Maker.ViewComponents
 {
     public class QRCodeViewer : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(string source = null)
+        public async Task<IViewComponentResult> InvokeAsync(string source = null, int size = 100)
         {
-            var data = Convert.ToBase64String(Utils.Methods.CreateQRCode(source));
+            var data = Convert.ToBase64String(Utils.Methods.CreateQRCode(source, size, size));
             return await Task.FromResult((IViewComponentResult)View(model: data));
         }
     }
