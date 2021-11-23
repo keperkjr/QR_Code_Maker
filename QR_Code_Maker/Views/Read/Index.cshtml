@@ -1,0 +1,46 @@
+﻿@model QR_Code_Maker.Models.QRCode
+
+@{
+    ViewData["Title"] = "Read";
+}
+
+<div class="text-center">
+    <div style="width: 60%; margin: auto;">
+        <form asp-action="Index" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group row" style="justify-content: center; margin-bottom: 0;">
+                <label asp-for="File" class="col-form-label">Select a QR Code to Decode</label>
+                <div class="input-group mb-3">
+                    @*<div class="custom-file">
+                        <input asp-for="bytes" type="file" class="custom-file-input">
+                        <label for="bytes" class="custom-file-label">Choose file</label>
+                        <span asp-validation-for="bytes" class="text-danger"></span>
+                    </div>*@
+                    <input asp-for="File" type="file">
+                    <span asp-validation-for="File" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Decode QR Code</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model != null && Model.text != null)
+    {
+        <div>
+            <h4>Result</h4>
+            <div id="resultInfo" class="text-danger"></div>
+            <hr />
+            <div class="col-sm-10" style="padding-left: 0">
+                @($"{Model.text}")
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

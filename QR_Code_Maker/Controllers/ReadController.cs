@@ -7,56 +7,62 @@ using System.Threading.Tasks;
 
 namespace QR_Code_Maker.Controllers
 {
-    public class CreateController : Controller
+    public class ReadController : Controller
     {
-        // GET: CreateController
+        // GET: ReadController
         public ActionResult Index()
         {
             return View();
         }
 
-        // POST: CreateController
+        // POST: ReadController
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(QR_Code_Maker.Models.QRCode qrCode)
         {
+            using (var ms = new System.IO.MemoryStream())
+            {
+                qrCode.File.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                qrCode.text = Utils.Methods.ReadQRCode(fileBytes);
+            }
             return View(nameof(Index), qrCode);
         }
 
-        // GET: CreateController/Download/?text=abc&size=123
-        public ActionResult Download(string text, int size)
-        {
-            var bytes = Utils.Methods.CreateQRCode(text, size, size);
-            return File(bytes, System.Net.Mime.MediaTypeNames.Image.Jpeg, $"QRCode_{size}x{size}");
-        }
-
-        // GET: CreateController/Details/5
+        // GET: ReadController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CreateController/Create
+        // GET: ReadController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CreateController/Create
+        // POST: ReadController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(QR_Code_Maker.Models.QRCode qrCode)
+        public ActionResult Create(IFormCollection collection)
         {
-            return View();
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // GET: CreateController/Edit/5
+        // GET: ReadController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: CreateController/Edit/5
+        // POST: ReadController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -71,13 +77,13 @@ namespace QR_Code_Maker.Controllers
             }
         }
 
-        // GET: CreateController/Delete/5
+        // GET: ReadController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: CreateController/Delete/5
+        // POST: ReadController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
