@@ -13,7 +13,6 @@ namespace QR_Code_Maker.Models
         public string text { get; set; }
         public int size { get; set; }
         [Required(ErrorMessage = "Please select a file")]
-        public byte[] bytes { get; set; }
         public IFormFile File { get; set; }
     }
 }

@@ -13,9 +13,9 @@
                 <label asp-for="File" class="col-form-label">Select a QR Code to Decode</label>
                 <div class="input-group mb-3">
                     @*<div class="custom-file">
-                        <input asp-for="bytes" type="file" class="custom-file-input">
+                        <input asp-for="File" type="file" class="custom-file-input">
                         <label for="bytes" class="custom-file-label">Choose file</label>
-                        <span asp-validation-for="bytes" class="text-danger"></span>
+                        <span asp-validation-for="File" class="text-danger"></span>
                     </div>*@
                     <input asp-for="File" type="file">
                     <span asp-validation-for="File" class="text-danger"></span>
@@ -26,19 +26,34 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Decode QR Code</button>
             </div>
         </form>
-    </div>
 
-    @if (Model != null && Model.text != null)
-    {
-        <div>
-            <h4>Result</h4>
-            <div id="resultInfo" class="text-danger"></div>
-            <hr />
-            <div class="col-sm-10" style="padding-left: 0">
-                @($"{Model.text}")
+        @if (Model != null)
+        {
+            <div>
+                <h4>Result</h4>
+                <hr />
+                <div class="form-group row" style="justify-content: center;">
+                    <span>Raw Text:</span>
+                    <div class="col-sm-10">
+                        @if (!string.IsNullOrWhiteSpace(Model.text))
+                        {
+                            @($"{Model.text}")
+                        }
+                        else
+                        {
+                            @($"Error: Unable to decode file. Make sure file is a valid QR Code image")
+                        }
+                    </div>
+                </div>
+                <div class="form-group row" style="justify-content: center;">
+                    <span>File:</span>
+                    <div class="col-sm-10">
+                        @($"{Model.File.FileName}")
+                    </div>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 @section Scripts {

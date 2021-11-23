@@ -18,15 +18,16 @@ namespace QR_Code_Maker.Controllers
         // POST: ReadController
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(QR_Code_Maker.Models.QRCode qrCode)
+        public ActionResult Index(QR_Code_Maker.Models.QRCode upload)
         {
+            var model = new QR_Code_Maker.Models.QRCode();
             using (var ms = new System.IO.MemoryStream())
             {
-                qrCode.File.CopyTo(ms);
+                upload.File.CopyTo(ms);
                 var fileBytes = ms.ToArray();
-                qrCode.text = Utils.Methods.ReadQRCode(fileBytes);
+                upload.text = Utils.Methods.ReadQRCode(fileBytes);
             }
-            return View(nameof(Index), qrCode);
+            return View(nameof(Index), upload);
         }
 
         // GET: ReadController/Details/5
