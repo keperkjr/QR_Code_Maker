@@ -9,15 +9,17 @@
         <form asp-action="Index" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <input type="hidden" asp-for="text" value="temp" />
+
             <div class="form-group row" style="justify-content: center; margin-bottom: 0;">
                 <label asp-for="File" class="col-form-label">Select a QR Code to Decode</label>
-                <div class="input-group mb-3">
-                    @*<div class="custom-file">
+                <div class="input-group mb-2">
+                    <div class="custom-file">
                         <input asp-for="File" type="file" class="custom-file-input">
-                        <label for="bytes" class="custom-file-label">Choose file</label>
-                        <span asp-validation-for="File" class="text-danger"></span>
-                    </div>*@
-                    <input asp-for="File" type="file">
+                        <label asp-for="File" class="custom-file-label">Choose file</label>
+                    </div>
+                </div>
+                <div style="padding-left: 0; margin-bottom: 5px;">
                     <span asp-validation-for="File" class="text-danger"></span>
                 </div>
             </div>
@@ -27,7 +29,7 @@
             </div>
         </form>
 
-        @if (Model != null)
+        @if (Model != null && ViewData.ModelState.IsValid)
         {
             <div>
                 <h4>Result</h4>
@@ -41,7 +43,9 @@
                         }
                         else
                         {
-                            @($"Error: Unable to decode file. Make sure file is a valid QR Code image")
+                            <span class="text-danger">
+                                @($"Error: Unable to decode file. Make sure file is a valid QR Code image")
+                            </span>
                         }
                     </div>
                 </div>
@@ -55,6 +59,17 @@
         }
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        let input = document.querySelector('.custom-file-input');
+        input.addEventListener('change', (e) => {
+            let fileName = input.files[0].name;
+            let label = input.parentNode.querySelector('.custom-file-label');
+            label.innerHTML = fileName;
+        });
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

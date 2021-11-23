@@ -54,20 +54,20 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-        let slider = document.querySelector("#size");
-        let sliderOutput = document.querySelector("#sliderOutput");
-        let resultInfo = document.querySelector("#resultInfo");
-        let text = document.querySelector("#text");
+    document.addEventListener('DOMContentLoaded', function (event) {
+        let slider = document.querySelector('#size');
+        let sliderOutput = document.querySelector('#sliderOutput');
+        let resultInfo = document.querySelector('#resultInfo');
+        let text = document.querySelector('#text');
 
         updateSliderSize(slider, sliderOutput);
 
-        slider.addEventListener("input", (e) => {
+        slider.addEventListener('input', (e) => {
             updateSliderSize(slider, sliderOutput);
             setUpdateRequiredText(resultInfo);
         });
 
-        text.addEventListener("keyup", (e) => {
+        text.addEventListener('keyup', (e) => {
             setUpdateRequiredText(resultInfo);
         });
     });
@@ -76,7 +76,7 @@
         if (!resultInfo) {
             return;
         }
-        resultInfo.innerHTML = "Settings have changed.<br />Click 'Create QR Code' to see updated results";
+        resultInfo.innerHTML = 'Settings have changed.<br />Click "Create QR Code" to see updated results';
     }
 
     function updateSliderSize(slider, sliderOutput) {

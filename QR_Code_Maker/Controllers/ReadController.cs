@@ -20,12 +20,18 @@ namespace QR_Code_Maker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(QR_Code_Maker.Models.QRCode upload)
         {
-            var model = new QR_Code_Maker.Models.QRCode();
-            using (var ms = new System.IO.MemoryStream())
+            if (!upload.File.ContentType.ToLower().Contains("image"))
             {
-                upload.File.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                upload.text = Utils.Methods.ReadQRCode(fileBytes);
+                ModelState.AddModelError(nameof(upload.File), "Error: File selected is not an image");
+            }
+            if (ModelState.IsValid)
+            {
+                using (var ms = new System.IO.MemoryStream())
+                {
+                    upload.File.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    upload.text = Utils.Methods.ReadQRCode(fileBytes);
+                }
             }
             return View(nameof(Index), upload);
         }
